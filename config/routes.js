@@ -21,6 +21,6 @@
  */
 
 module.exports.routes = {
-    'get /words': 'WordController.get'
-
+    'get /words/get/:id': 'WordController.get',
+    'post /words/create': 'WordController.create'
 };

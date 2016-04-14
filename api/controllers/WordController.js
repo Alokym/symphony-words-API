@@ -1,39 +1,24 @@
 module.exports = {
     get: function (req, res) {
-        var words = [
-            {
-                word: 'car',
-                translation: 'Автомобіль'
-            },
-            {
-                word: 'cat',
-                translation: 'Кіт'
-            },
-            {
-                word: 'test',
-                translation: 'Тест'
-            },
-            {
-                word: 'yolo',
-                translation: 'Йоло'
-            },
-            {
-                word: 'dog',
-                translation: 'Dog'
-            },
-            {
-                word: 'Longon',
-                translation: 'Лондон'
-            },
-            {
-                word: 'russian',
-                translation: 'Москаль'
-            },
-            {
-                word: 'invaders',
-                translation: 'Москалі'
+        Word.findOne({id: req.param('id')}, function (err, words) {
+            if (err) {
+                res.statusCode = 500;
+                res.json({message: err});
+                return;
             }
-        ];
-        res.json(words);
+            res.json(words);
+        });
+    },
+    create: function (req, res) {
+        var words = req.body;
+        Word.create({words: words}, function (err, words) {
+            if (err) {
+                res.statusCode = 500;
+                res.json({message: err});
+                return;
+            }
+            res.statusCode = 201;
+            res.json(words);
+        });
     }
 };
