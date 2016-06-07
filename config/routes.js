@@ -21,6 +21,6 @@
  */
 
 module.exports.routes = {
-    'get /words/get/:id': 'WordController.get',
-    'post /words/create': 'WordController.create'
+    'post /vocabulary/create': 'VocabularyController.create',
+    'get /vocabulary/:id': 'VocabularyController.get'
 };
