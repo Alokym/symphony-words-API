@@ -10,5 +10,7 @@
  */
 
 module.exports.models = {
-    migrate: 'safe'
+    migrate: 'drop',
+    autoCreatedAt: false,
+    autoUpdatedAt: false
 };

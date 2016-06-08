@@ -16,13 +16,15 @@ module.exports = {
             .spread(function (voc, words) {
                 return VocabularyService.linkWords(voc, words);
             })
-            .then(function (voc) {
+            .spread(function (voc) {
                 return VocabularyService.findOneById(voc.id);
             })
             .then(function (voc) {
-                return res.json(voc);
+                res.json(voc);
+                WordService.link(voc.words);
             })
             .catch(function (err) {
+                console.log(err);
                 return res.json(err);
             });
     },

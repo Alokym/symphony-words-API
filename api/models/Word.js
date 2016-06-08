@@ -12,9 +12,10 @@ module.exports = {
             collection: 'word',
             via: 'translations'
         },
-        owners: {
-            collection: 'vocabulary',
-            via: 'words'
+        translation: {
+            collection: 'word',
+            via: 'translation',
+            through: 'vocabularywordhastranslation'
         },
         findOrCreate: function (word, language) {
             var initialWord = word;

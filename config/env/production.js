@@ -17,7 +17,8 @@ module.exports = {
      ***************************************************************************/
 
     models: {
-        connection: 'words_prod'
+        connection: 'words_prod',
+        migrate: 'save'
     },
     connections: {
         words_prod: {

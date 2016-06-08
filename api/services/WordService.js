@@ -18,7 +18,6 @@ module.exports = {
         return;
     },
     storeWords: function (words, from, to) {
-        var that = this;
         var deferred = Q.defer(),
             wordsResult = [];
         async.eachSeries(words, function (word, cb) {
@@ -26,12 +25,11 @@ module.exports = {
                 Word.findOrCreate({name: word.name, language: from || 'en'}),
                 Word.findOrCreate({name: word.translation, language: to || 'ua'})
             ]).spread(function (word, translation) {
-                that.link(word, translation);
-                return word.save().fail(function () {
-                    return word;
-                });
-            }).then(function (word) {
-                wordsResult.push(word);
+                var result = {
+                    word: word,
+                    translation: translation
+                };
+                wordsResult.push(result);
                 cb();
             }).catch(function (err) {
                 cb(err);
@@ -44,7 +42,15 @@ module.exports = {
         });
         return deferred.promise;
     },
-    link: function (word, translation) {
-        return word.translations.add(translation.id);
+    link: function (words) {
+        async.eachSeries(words, function (wordData, cb) {
+            var word = wordData.word;
+            var translation = wordData.translation;
+            word.translations.add(translation.id);
+            word.save().fail(function () {})
+                .then(function () {
+                    cb();
+                });
+        });
     }
 };

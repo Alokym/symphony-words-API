@@ -1,13 +1,14 @@
 module.exports = {
+    autoCreatedAt: true,
+    autoUpdatedAt: true,
     attributes: {
         name: {
             type: 'string',
             required: true
         },
         words: {
-            collection: 'word',
-            via: 'owners',
-            dominant: true
+            collection: 'vocabularywordhastranslation',
+            via: 'vocabulary'
         }
     }
 };
